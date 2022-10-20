@@ -1,0 +1,81 @@
+
+syntax = "proto3";
+
+option go_package = "SmsGateway/proto";
+option java_multiple_files = true;
+option java_package = "SmsGateway";
+option java_outer_classname = "SmsGatewayProto";
+
+package SmsBase;
+
+service SmsGateway {
+  // Sends a greeting
+  rpc CreateMessage (MessageRequest) returns (MessageReply) {}
+
+  rpc CreateSmsTemplate (TemplateRequest) returns (TemplateReply) {}
+
+  rpc QuerySmsTemplate (QuerySmsTemplateRequest) returns (CommonReply) {}
+
+  // rpc DescribeMessage (MessageRequest) returns (MessageReply) {}
+
+  // rpc DescribeTemplate (MessageRequest) returns (MessageReply) {}
+
+  
+}
+// The request message containing the user's name.
+
+message Config {
+  string AppID = 1;
+  string AppSecret = 2;
+}
+
+message MessageRequest {
+  string Platform = 1;
+  Config config = 2;
+  string Content = 3;
+  string Mobile =4;
+  string SignName = 5;
+  string TemplateCode = 6;
+  map<string, string> Param = 7;
+  string SdkAppId = 8;
+}
+
+// The response message containing the greetings
+message MessageReply {
+  string Error = 1;
+  string Code = 2;
+  string RequestId = 3;
+  string BizId = 4;
+  string RawContent = 5;
+}
+
+message TemplateRequest{
+   string Platform = 1;
+  Config config = 2;
+   string Name = 3;
+   string Content=4;
+   string TemplateType=5;
+   string Remark=6;
+   string International=7;
+}
+
+message QuerySmsTemplateRequest{
+   string Platform = 1;
+  Config config = 2;
+   string TemplateCode = 3;
+}
+
+message TemplateReply {
+  string Error = 1;
+  string Code = 2;
+  string RequestId = 3;
+  string TemplateCode = 4;
+  string RawContent = 5;
+}
+
+message CommonReply {
+  string Error = 1;
+  string Code = 2;
+  string RequestId = 3;
+  string RawContent = 4;
+}
