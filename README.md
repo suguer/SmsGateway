@@ -15,7 +15,7 @@
 * [时代互联](https://www.now.cn)
 
 ## 示例使用代码
-
+直接使用
 ```go
  gateway := gateway.NewGatewayInterface("aliyun", &model.Config{
 	 	AppID:     "AppID",
@@ -26,6 +26,12 @@ message := model.NewMessage("您正在申请手机注册，验证码为：1234�
 Message, err := api.SendMessage(model.NewPhone("150xxxxxxxx"), message)
 fmt.Printf("Message: %v\n", Message)
 fmt.Printf("err: %v\n", err)
+```
+
+开启Grpc微服务
+```go
+s := server.NewGrpcServer()
+s.Start(50051)
 ```
 
 ## 预期功能  
