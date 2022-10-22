@@ -33,8 +33,6 @@ func (c *HttpClient) Send(req *HttpRequest) (*HttpResponse, error) {
 
 	// convert sdk http request to origin http.Request
 	httpReq, err := req.buildHTTPRequest()
-	// fmt.Printf("httpReq.PostForm: %v\n", httpReq.PostForm)
-	// fmt.Printf("httpReq.PostForm: %v\n", httpReq.Body)
 	if err != nil {
 		return nil, err
 	}

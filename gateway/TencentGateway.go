@@ -128,7 +128,6 @@ func (g *TencentGateway) CreateSmsTemplate(template *model.Template) (model.Crea
 		"International":   template.GetInternational(),
 		"Remark":          template.GetRemark(),
 	}
-	fmt.Printf("args: %v\n", args)
 	jsonBytes, err := json.Marshal(args)
 	if err != nil {
 		return data.CreateSmsTemplateResponse, err

@@ -2,7 +2,6 @@ package gateway
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/suguer/SmsGateway/model"
 	"github.com/suguer/SmsGateway/private/http"
@@ -37,7 +36,6 @@ func (g *IhuyiGateway) SendMessage(mobile *model.Phone, message *model.Message) 
 	request.SetQuery("content", message.GetContent())
 	g.buildParam(request)
 	response, err := g.send(request)
-	fmt.Printf("response.GetBody(): %v\n", string(response.GetBody()))
 	err = model.NewCommonResponse(&data, response.GetBody())
 	if err != nil {
 		return data.SendSMSMessageResponse, err

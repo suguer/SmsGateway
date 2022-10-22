@@ -124,7 +124,6 @@ func (g *UcloudGateway) QuerySmsTemplate(TemplateCode string) (model.QuerySmsTem
 		return data.QuerySmsTemplateponse, err
 	}
 	err = model.NewCommonResponse(&data, response.GetBody())
-	fmt.Printf("string(response.GetBody()): %v\n", string(response.GetBody()))
 	if err != nil {
 		return data.QuerySmsTemplateponse, err
 	}
