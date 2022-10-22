@@ -31,6 +31,9 @@ func (code *Code) UnmarshalJSON(value []byte) error {
 	code.Val = strconv.Itoa(temp)
 	return nil
 }
+func (code *Code) GetCode() string {
+	return code.Val
+}
 
 type CommonResponse struct {
 	Message    string
@@ -65,28 +68,16 @@ type SendSMSMessageResponse struct {
 	BizId string
 }
 
-func (m *SendSMSMessageResponse) SetRawContent(content string) {
-	m.RawContent = content
-}
-
-func NewSendSMSMessageResponse(data interface{}, body []byte) error {
-	typeOfData := reflect.ValueOf(data)
-	err := json.Unmarshal(body, &data)
-	if err != nil {
-		return err
-	}
-	method := typeOfData.MethodByName("SetRawContent")
-	if method.IsValid() {
-		in := make([]reflect.Value, 1)
-		in[0] = reflect.ValueOf(string(body))
-		method.Call(in)
-	} else {
-		return errors.New("RawContent.empty")
-	}
-	return nil
-}
-
 type CreateSmsTemplateResponse struct {
 	CommonResponse
 	TemplateCode string
+}
+
+func (r *CreateSmsTemplateResponse) transfer() {
+
+}
+
+type QuerySmsTemplateponse struct {
+	CommonResponse
+	Status string
 }

@@ -17,9 +17,9 @@ type QiniuGateway struct {
 
 type QiniuSendSMSMessageResponse struct {
 	model.SendSMSMessageResponse
-	Message string `json:"message"`
-	Code    string `json:"error"`
-	BizId   string `json:"message_id"`
+	Message string     `json:"message"`
+	Code    model.Code `json:"error"`
+	BizId   string     `json:"message_id"`
 }
 
 func (g *QiniuGateway) GetName() string {
@@ -50,11 +50,15 @@ func (g *QiniuGateway) SendMessage(mobile *model.Phone, message *model.Message) 
 	g.buildParam(request)
 	response, err := g.send(request)
 
-	err = model.NewSendSMSMessageResponse(&data, response.GetBody())
+	err = model.NewCommonResponse(&data, response.GetBody())
 	if err != nil {
 		return data.SendSMSMessageResponse, err
 	}
-	if len(data.Code) != 0 {
+	data.SendSMSMessageResponse.BizId = data.BizId
+	data.SendSMSMessageResponse.Code = data.Code
+	data.SendSMSMessageResponse.RequestId = data.RequestId
+	data.SendSMSMessageResponse.Message = data.Message
+	if data.Code.Val != "0" {
 		return data.SendSMSMessageResponse, errors.New(data.Message)
 	}
 	return data.SendSMSMessageResponse, nil

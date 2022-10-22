@@ -17,9 +17,9 @@ type BaiduGateway struct {
 }
 type BaiduSendSMSMessageResponse struct {
 	model.SendSMSMessageResponse
-	Code      int    `json:"code"`
-	RequestId string `json:"requestId"`
-	Message   string `json:"message"`
+	Code      model.Code `json:"code"`
+	RequestId string     `json:"requestId"`
+	Message   string     `json:"message"`
 }
 
 func (g *BaiduGateway) Init(c *model.Config) {
@@ -43,7 +43,7 @@ func (g *BaiduGateway) SendMessage(mobile *model.Phone, message *model.Message) 
 		"contentVar":  message.GetParam(),
 	}
 
-	var data AliyunSendSMSMessageResponse
+	var data BaiduSendSMSMessageResponse
 	jsonBytes, err := json.Marshal(args)
 	if err != nil {
 		return data.SendSMSMessageResponse, err
@@ -51,10 +51,14 @@ func (g *BaiduGateway) SendMessage(mobile *model.Phone, message *model.Message) 
 	request.SetRequestBody(jsonBytes)
 	g.buildParam(request)
 	response, err := g.send(request)
-	err = model.NewSendSMSMessageResponse(&data, response.GetBody())
+	err = model.NewCommonResponse(&data, response.GetBody())
 	if err != nil {
 		return data.SendSMSMessageResponse, err
 	}
+	data.SendSMSMessageResponse.BizId = data.BizId
+	data.SendSMSMessageResponse.Code = data.Code
+	data.SendSMSMessageResponse.RequestId = data.RequestId
+	data.SendSMSMessageResponse.Message = data.Message
 	if data.Code.Val != "OK" {
 		return data.SendSMSMessageResponse, errors.New(data.Message)
 	}

@@ -14,7 +14,6 @@ type JuheGateway struct {
 type JuheSendSMSMessageResponse struct {
 	model.SendSMSMessageResponse
 	Message string `json:"msg"`
-	Code    string `json:"code"`
 }
 
 func (g *JuheGateway) GetName() string {
@@ -35,12 +34,16 @@ func (g *JuheGateway) SendMessage(mobile *model.Phone, message *model.Message) (
 	g.buildParam(request)
 	response, err := g.send(request)
 
-	var data NowcnSendSMSMessageResponse
-	err = model.NewSendSMSMessageResponse(&data, response.GetBody())
+	var data JuheSendSMSMessageResponse
+	err = model.NewCommonResponse(&data, response.GetBody())
 	if err != nil {
 		return data.SendSMSMessageResponse, err
 	}
-	if data.Code != "0" {
+	data.SendSMSMessageResponse.BizId = data.BizId
+	data.SendSMSMessageResponse.Code = data.Code
+	data.SendSMSMessageResponse.RequestId = data.RequestId
+	data.SendSMSMessageResponse.Message = data.Message
+	if data.Code.Val != "0" {
 		return data.SendSMSMessageResponse, errors.New(data.Message)
 	}
 	return data.SendSMSMessageResponse, nil

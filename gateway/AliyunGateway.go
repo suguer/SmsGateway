@@ -39,7 +39,7 @@ func (g *AliyunGateway) SendMessage(mobile *model.Phone, message *model.Message)
 	g.buildParam(request)
 	response, err := g.send(request)
 	var data AliyunSendSMSMessageResponse
-	err = model.NewSendSMSMessageResponse(&data, response.GetBody())
+	err = model.NewCommonResponse(&data, response.GetBody())
 	if err != nil {
 		return data.SendSMSMessageResponse, err
 	}
@@ -74,8 +74,8 @@ func (g *AliyunGateway) CreateSmsTemplate(template *model.Template) (model.Creat
 	}
 	return data, nil
 }
-func (g *AliyunGateway) QuerySmsTemplate(TemplateCode string) (model.CommonResponse, error) {
-	var data model.CommonResponse
+func (g *AliyunGateway) QuerySmsTemplate(TemplateCode string) (model.QuerySmsTemplateponse, error) {
+	var data model.QuerySmsTemplateponse
 	request := http.NewHttpRequest()
 	request.SetQuery("Action", "QuerySmsTemplate")
 	request.SetQuery("TemplateCode", TemplateCode)

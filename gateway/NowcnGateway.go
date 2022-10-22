@@ -14,7 +14,6 @@ type NowcnGateway struct {
 type NowcnSendSMSMessageResponse struct {
 	model.SendSMSMessageResponse
 	Message string `json:"msg"`
-	Code    string `json:"code"`
 }
 
 func (g *NowcnGateway) GetName() string {
@@ -36,11 +35,11 @@ func (g *NowcnGateway) SendMessage(mobile *model.Phone, message *model.Message) 
 	response, err := g.send(request)
 
 	var data NowcnSendSMSMessageResponse
-	err = model.NewSendSMSMessageResponse(&data, response.GetBody())
+	err = model.NewCommonResponse(&data, response.GetBody())
 	if err != nil {
 		return data.SendSMSMessageResponse, err
 	}
-	if data.Code != "0" {
+	if data.Code.Val != "0" {
 		return data.SendSMSMessageResponse, errors.New(data.Message)
 	}
 	return data.SendSMSMessageResponse, nil

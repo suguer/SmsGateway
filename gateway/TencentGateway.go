@@ -89,13 +89,20 @@ func (g *TencentGateway) SendMessage(mobile *model.Phone, message *model.Message
 	g.buildParam(request)
 	response, err := g.send(request)
 
-	err = model.NewSendSMSMessageResponse(&data, response.GetBody())
+	err = model.NewCommonResponse(&data, response.GetBody())
 	if err != nil {
 		return data.SendSMSMessageResponse, err
 	}
+	data.SendSMSMessageResponse.RequestId = data.Response.RequestId
+	if len(data.Response.SendStatusSet) > 0 {
+		data.SendSMSMessageResponse.BizId = data.Response.SendStatusSet[0].SerialNo
+		data.SendSMSMessageResponse.Message = data.Response.SendStatusSet[0].Message
+		data.SendSMSMessageResponse.Code = model.Code{Val: data.Response.SendStatusSet[0].Code}
+	} else if data.Response.Error.Message != "" {
+		data.SendSMSMessageResponse.Message = data.Response.Error.Message
+		data.SendSMSMessageResponse.Code = model.Code{Val: data.Response.Error.Code}
+	}
 	if len(data.Response.Error.Message) != 0 {
-		data.Code = model.Code{Val: data.Response.Error.Code}
-		data.Message = data.Response.Error.Message
 		return data.SendSMSMessageResponse, errors.New(data.Message)
 	}
 	return data.SendSMSMessageResponse, nil

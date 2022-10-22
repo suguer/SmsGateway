@@ -15,11 +15,11 @@ type GatewayInterface interface {
 	// SendMessage 发送短信 ,Struct,错误码
 	SendMessage(mobile *model.Phone, message *model.Message) (model.SendSMSMessageResponse, error)
 
-	SendBatchSms(mobile []*model.Phone, message *model.Message) (model.SendSMSMessageResponse, error)
+	// SendBatchSms(mobile []*model.Phone, message *model.Message) (model.SendSMSMessageResponse, error)
 
-	CreateSmsTemplate(template *model.Template) (model.CreateSmsTemplateResponse, error)
+	// CreateSmsTemplate(template *model.Template) (model.CreateSmsTemplateResponse, error)
 
-	QuerySmsTemplate(TemplateCode string) (model.CommonResponse, error)
+	// QuerySmsTemplate(TemplateCode string) (model.QuerySmsTemplateponse, error)
 }
 
 type Gateway struct {
@@ -29,23 +29,19 @@ type Gateway struct {
 }
 
 func (g *Gateway) SendMessage(mobile *model.Phone, message *model.Message) (model.SendSMSMessageResponse, error) {
-	var response model.SendSMSMessageResponse
-	return response, errors.New("unsupport")
+	return model.SendSMSMessageResponse{}, errors.New("unsupport")
 }
 
 func (g *Gateway) SendBatchSms(mobile []*model.Phone, message *model.Message) (model.SendSMSMessageResponse, error) {
-	var response model.SendSMSMessageResponse
-	return response, errors.New("unsupport")
+	return model.SendSMSMessageResponse{}, errors.New("unsupport")
 }
 
 func (g *Gateway) CreateSmsTemplate(template *model.Template) (model.CreateSmsTemplateResponse, error) {
-	var response model.CreateSmsTemplateResponse
-	return response, errors.New("unsupport")
+	return model.CreateSmsTemplateResponse{}, errors.New("unsupport")
 }
 
-func (g *Gateway) QuerySmsTemplate(TemplateCode string) (model.CommonResponse, error) {
-	var response model.CommonResponse
-	return response, errors.New("unsupport")
+func (g *Gateway) QuerySmsTemplate(TemplateCode string) (model.QuerySmsTemplateponse, error) {
+	return model.QuerySmsTemplateponse{}, errors.New("unsupport")
 }
 
 func (g *Gateway) buildParam(request *http.HttpRequest) {

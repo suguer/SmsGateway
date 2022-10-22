@@ -38,10 +38,14 @@ func (g *IhuyiGateway) SendMessage(mobile *model.Phone, message *model.Message) 
 	g.buildParam(request)
 	response, err := g.send(request)
 	fmt.Printf("response.GetBody(): %v\n", string(response.GetBody()))
-	err = model.NewSendSMSMessageResponse(&data, response.GetBody())
+	err = model.NewCommonResponse(&data, response.GetBody())
 	if err != nil {
 		return data.SendSMSMessageResponse, err
 	}
+	data.SendSMSMessageResponse.BizId = data.BizId
+	data.SendSMSMessageResponse.Code = data.Code
+	data.SendSMSMessageResponse.RequestId = data.RequestId
+	data.SendSMSMessageResponse.Message = data.Message
 	if data.Code.Val != "2" {
 		return data.SendSMSMessageResponse, errors.New(data.Message)
 	}
