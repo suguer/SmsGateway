@@ -17,9 +17,9 @@ type GatewayInterface interface {
 
 	// SendBatchSms(mobile []*model.Phone, message *model.Message) (model.SendSMSMessageResponse, error)
 
-	// CreateSmsTemplate(template *model.Template) (model.CreateSmsTemplateResponse, error)
+	CreateSmsTemplate(template *model.Template) (model.CreateSmsTemplateResponse, error)
 
-	// QuerySmsTemplate(TemplateCode string) (model.QuerySmsTemplateponse, error)
+	QuerySmsTemplate(TemplateCode string) (model.QuerySmsTemplateponse, error)
 }
 
 type Gateway struct {

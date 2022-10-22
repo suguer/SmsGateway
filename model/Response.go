@@ -79,5 +79,8 @@ func (r *CreateSmsTemplateResponse) transfer() {
 
 type QuerySmsTemplateponse struct {
 	CommonResponse
-	Status string
+	// 0：审核中。 1：审核通过。 2：审核失败，请在返回参数Reason中查看审核失败原因。 10：取消审核。
+	// 3 待审核,4 被禁用
+	TemplateStatus int
+	Reason         string
 }

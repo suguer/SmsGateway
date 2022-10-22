@@ -33,6 +33,11 @@ type UcloudQuerySmsTemplateponse struct {
 	model.QuerySmsTemplateponse
 	Code      model.Code `json:"RetCode"`
 	RequestId string     `json:"ReqUuid"`
+	Data      struct {
+		TemplateCode string `json:"TemplateId"`
+		Status       int
+		ErrDesc      string
+	}
 }
 
 func (g *UcloudGateway) Init(c *model.Config) {
@@ -87,6 +92,9 @@ func (g *UcloudGateway) CreateSmsTemplate(template *model.Template) (model.Creat
 	request.SetQuery("Template", template.GetContent())
 	request.SetQuery("Remark", template.GetRemark())
 	request.SetQuery("Purpose", strconv.Itoa(template.GetType2Int()+1))
+	if request.GetQuery("Purpose") == "3" {
+		request.SetQuery("UnsubscribeInfo", "退订回T")
+	}
 	g.buildParam(request)
 	response, err := g.send(request)
 	if err != nil {
@@ -116,13 +124,17 @@ func (g *UcloudGateway) QuerySmsTemplate(TemplateCode string) (model.QuerySmsTem
 		return data.QuerySmsTemplateponse, err
 	}
 	err = model.NewCommonResponse(&data, response.GetBody())
-	// model.NewQuerySmsTemplateponse(data)
+	fmt.Printf("string(response.GetBody()): %v\n", string(response.GetBody()))
 	if err != nil {
 		return data.QuerySmsTemplateponse, err
 	}
+	//短信模板状态；状态说明：0-待审核，1-审核中，2-审核通过，3-审核未通过，4-被禁用
+	StatusMap := map[int]int{0: 3, 1: 0, 2: 1, 3: 2, 4: 4}
+	data.QuerySmsTemplateponse.TemplateStatus = StatusMap[data.Data.Status]
 	data.QuerySmsTemplateponse.Code = data.Code
 	data.QuerySmsTemplateponse.RequestId = data.RequestId
-	return model.QuerySmsTemplateponse{}, nil
+	data.QuerySmsTemplateponse.Reason = data.Data.ErrDesc
+	return data.QuerySmsTemplateponse, nil
 }
 
 func (g *UcloudGateway) buildParam(request *http.HttpRequest) {

@@ -58,9 +58,9 @@ s.Start(50051)
 
 | 平台                                            | 发送方式 | 其他描述 | 发送短信 | 创建模板 | 查询模板 |
 | ----------------------------------------------- | -------- | -------- | -------- | -------- | :------: |
-| [阿里云](https://www.aliyun.com/)               | 模板     |     个人可用     | ✅        |         |         |
+| [阿里云](https://www.aliyun.com/)               | 模板     |     个人可用     | ✅        | ✅         |   ✅       |
 | [腾讯云](https://cloud.tencent.com/product/sms) | 模板     |    个人可用      | ✅        |          |          |
-| [Ucloud](https://www.ucloud.cn)                 | 模板     |    个人可用      | ✅        |          |          |
+| [Ucloud](https://www.ucloud.cn)                 | 模板     |    个人可用      | ✅        |     ✅     |    ✅      |
 | [百度云](https://cloud.baidu.com/)              | 模板     |    企业      | ✅        |          |          |
 | [七牛云](https://www.qiniu.com/)                | 模板     |    企业      | ✅        |          |          |
 | [互亿无线](https://www.ihuyi.com/)              | 内容     |     个人可用       | ✅        |          |          |
