@@ -13,6 +13,8 @@
 * [互亿无线](https://www.ihuyi.com/)
 * [聚合数据](https://www.juhe.cn/)
 * [时代互联](https://www.now.cn)
+* [SUBMAIL](https://www.mysubmail.com/)
+* [短信宝](https://www.smsbao.com/)
 
 ## 示例使用代码
 直接使用
@@ -59,12 +61,14 @@ s.Start(50051)
 | 平台                                            | 发送方式 | 其他描述 | 发送短信 | 创建模板 | 查询模板 |
 | ----------------------------------------------- | -------- | -------- | -------- | -------- | :------: |
 | [阿里云](https://www.aliyun.com/)               | 模板     |     个人可用     | ✅        | ✅         |   ✅       |
-| [腾讯云](https://cloud.tencent.com/product/sms) | 模板     |    个人可用      | ✅        |          |          |
+| [腾讯云](https://cloud.tencent.com/product/sms) | 模板     |    个人可用      | ✅        |   禁止个人       |          |
 | [Ucloud](https://www.ucloud.cn)                 | 模板     |    个人可用      | ✅        |     ✅     |    ✅      |
 | [百度云](https://cloud.baidu.com/)              | 模板     |    企业      | ✅        |          |          |
 | [七牛云](https://www.qiniu.com/)                | 模板     |    企业      | ✅        |          |          |
 | [互亿无线](https://www.ihuyi.com/)              | 内容     |     个人可用       | ✅        |          |          |
 | [聚合数据](https://www.juhe.cn/)                | 模板     |     个人可用       |       |          |          |
-| [时代互联](https://www.now.cn)                  | 内容     |     个人可用       | ✅        |          |          |
+| [时代互联](https://www.now.cn)                  | 内容     |     个人可用       | ✅        |      无    |      无    |
+| [SUBMAIL](https://www.mysubmail.com/)          | 内容/模板     |     企业       |        |          |          |
+| [短信宝](https://www.smsbao.com/)        | 内容     |     个人       |   ✅      |     无     |    无      |
 
 ### 功能逐步完善中,如果有需要接入的其他短信平台可留言备注

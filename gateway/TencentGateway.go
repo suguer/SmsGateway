@@ -200,10 +200,3 @@ func hmacsha256(s, key string) string {
 	hashed.Write([]byte(s))
 	return string(hashed.Sum(nil))
 }
-
-// var resp interface{}
-// json.Unmarshal(response.GetBody(), &resp)
-// format := resp.(map[string]interface{})
-// fmt.Printf("format: %v\n", format["Response"])
-// newBody, _ := json.Marshal(format["Response"])
-// fmt.Printf("newBody: %v\n", string(newBody))

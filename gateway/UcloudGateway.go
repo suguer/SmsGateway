@@ -47,7 +47,7 @@ func (g *UcloudGateway) Init(c *model.Config) {
 }
 
 func (g *UcloudGateway) GetName() string {
-	return "ucloud" + g.Conf.AppID
+	return "ucloud"
 }
 
 func (g *UcloudGateway) SendMessage(mobile *model.Phone, message *model.Message) (model.SendSMSMessageResponse, error) {
