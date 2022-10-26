@@ -15,6 +15,7 @@
 * [时代互联](https://www.now.cn)
 * [SUBMAIL](https://www.mysubmail.com/)
 * [短信宝](https://www.smsbao.com/)
+* [螺丝帽](https://luosimao.com/)
 
 ## 示例使用代码
 直接使用
@@ -70,5 +71,6 @@ s.Start(50051)
 | [时代互联](https://www.now.cn)                  | 内容     |     个人可用       | ✅        |      无    |      无    |
 | [SUBMAIL](https://www.mysubmail.com/)          | 内容/模板     |     企业       |        |          |          |
 | [短信宝](https://www.smsbao.com/)        | 内容     |     个人       |   ✅      |     无     |    无      |
+| [螺丝帽](https://luosimao.com/)        | 内容     |     个人       |   ✅      |     无     |    无      |
 
 ### 功能逐步完善中,如果有需要接入的其他短信平台可留言备注

@@ -1,8 +1,6 @@
 package gateway
 
 import (
-	"errors"
-
 	"github.com/suguer/SmsGateway/model"
 	"github.com/suguer/SmsGateway/private/http"
 )
@@ -38,9 +36,6 @@ func (g *NowcnGateway) SendMessage(mobile *model.Phone, message *model.Message) 
 	err = model.NewCommonResponse(&data, response.GetBody())
 	if err != nil {
 		return data.SendSMSMessageResponse, err
-	}
-	if data.Code.Val != "0" {
-		return data.SendSMSMessageResponse, errors.New(data.Message)
 	}
 	return data.SendSMSMessageResponse, nil
 }

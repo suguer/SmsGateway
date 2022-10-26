@@ -2,7 +2,6 @@ package gateway
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/url"
 
@@ -58,9 +57,6 @@ func (g *QiniuGateway) SendMessage(mobile *model.Phone, message *model.Message) 
 	data.SendSMSMessageResponse.Code = data.Code
 	data.SendSMSMessageResponse.RequestId = data.RequestId
 	data.SendSMSMessageResponse.Message = data.Message
-	if data.Code.Val != "0" {
-		return data.SendSMSMessageResponse, errors.New(data.Message)
-	}
 	return data.SendSMSMessageResponse, nil
 }
 

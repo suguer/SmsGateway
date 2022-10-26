@@ -43,9 +43,6 @@ func (g *AliyunGateway) SendMessage(mobile *model.Phone, message *model.Message)
 	if err != nil {
 		return data.SendSMSMessageResponse, err
 	}
-	if data.Code.Val != "OK" {
-		return data.SendSMSMessageResponse, errors.New(data.Message)
-	}
 	return data.SendSMSMessageResponse, err
 }
 func (g *AliyunGateway) CreateSmsTemplate(template *model.Template) (model.CreateSmsTemplateResponse, error) {

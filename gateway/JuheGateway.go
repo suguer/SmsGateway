@@ -1,8 +1,6 @@
 package gateway
 
 import (
-	"errors"
-
 	"github.com/suguer/SmsGateway/model"
 	"github.com/suguer/SmsGateway/private/http"
 )
@@ -43,9 +41,6 @@ func (g *JuheGateway) SendMessage(mobile *model.Phone, message *model.Message) (
 	data.SendSMSMessageResponse.Code = data.Code
 	data.SendSMSMessageResponse.RequestId = data.RequestId
 	data.SendSMSMessageResponse.Message = data.Message
-	if data.Code.Val != "0" {
-		return data.SendSMSMessageResponse, errors.New(data.Message)
-	}
 	return data.SendSMSMessageResponse, nil
 }
 

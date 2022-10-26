@@ -2,7 +2,6 @@ package gateway
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/url"
 	"time"
@@ -59,9 +58,6 @@ func (g *BaiduGateway) SendMessage(mobile *model.Phone, message *model.Message) 
 	data.SendSMSMessageResponse.Code = data.Code
 	data.SendSMSMessageResponse.RequestId = data.RequestId
 	data.SendSMSMessageResponse.Message = data.Message
-	if data.Code.Val != "OK" {
-		return data.SendSMSMessageResponse, errors.New(data.Message)
-	}
 	return data.SendSMSMessageResponse, err
 }
 

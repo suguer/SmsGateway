@@ -77,6 +77,8 @@ func NewGatewayInterface(platform string, c *model.Config) (GatewayInterface, er
 		gateway = &IhuyiGateway{}
 	case "smsbao":
 		gateway = &SmsbaoGateway{}
+	case "luosimao":
+		gateway = &LuosimaoGateway{}
 	default:
 		return nil, errors.New("unspport")
 	}

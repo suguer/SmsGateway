@@ -1,8 +1,6 @@
 package gateway
 
 import (
-	"errors"
-
 	"github.com/suguer/SmsGateway/model"
 	"github.com/suguer/SmsGateway/private/http"
 	"github.com/suguer/SmsGateway/private/utils"
@@ -10,10 +8,6 @@ import (
 
 type SmsbaoGateway struct {
 	Gateway
-}
-
-type SmsbaoGatewaySendSMSMessageResponse struct {
-	model.SendSMSMessageResponse
 }
 
 func (g *SmsbaoGateway) Init(c *model.Config) {
@@ -52,9 +46,6 @@ func (g *SmsbaoGateway) SendMessage(mobile *model.Phone, message *model.Message)
 		data.Message = "内容含有敏感词"
 	case "51":
 		data.Message = "手机号码不正确"
-	}
-	if data.Code.Val != "0" {
-		return data, errors.New(data.Message)
 	}
 	return data, nil
 }
