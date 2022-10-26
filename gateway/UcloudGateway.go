@@ -73,9 +73,9 @@ func (g *UcloudGateway) SendMessage(mobile *model.Phone, message *model.Message)
 	data.SendSMSMessageResponse.Code = data.Code
 	data.SendSMSMessageResponse.RequestId = data.RequestId
 	data.SendSMSMessageResponse.Message = data.Message
-	// if data.Code.Val != "0" {
-	// 	return data.SendSMSMessageResponse, errors.New(data.Message)
-	// }
+	if data.Code.Val == "0" {
+		data.SendSMSMessageResponse.Code.Val = "OK"
+	}
 	return data.SendSMSMessageResponse, nil
 }
 

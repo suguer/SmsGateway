@@ -102,9 +102,9 @@ func (g *TencentGateway) SendMessage(mobile *model.Phone, message *model.Message
 		data.SendSMSMessageResponse.Message = data.Response.Error.Message
 		data.SendSMSMessageResponse.Code = model.Code{Val: data.Response.Error.Code}
 	}
-	// if len(data.Response.Error.Message) != 0 {
-	// 	return data.SendSMSMessageResponse, errors.New(data.Message)
-	// }
+	if len(data.Response.Error.Message) == 0 {
+		data.SendSMSMessageResponse.Code.Val = "OK"
+	}
 	return data.SendSMSMessageResponse, nil
 }
 

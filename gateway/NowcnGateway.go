@@ -37,6 +37,9 @@ func (g *NowcnGateway) SendMessage(mobile *model.Phone, message *model.Message) 
 	if err != nil {
 		return data.SendSMSMessageResponse, err
 	}
+	if data.SendSMSMessageResponse.Code.Val == "0" {
+		data.SendSMSMessageResponse.Code.Val = "OK"
+	}
 	return data.SendSMSMessageResponse, nil
 }
 

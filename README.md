@@ -29,6 +29,7 @@ message := model.NewMessage("您正在申请手机注册，验证码为：1234�
 Message, err := api.SendMessage(model.NewPhone("150xxxxxxxx"), message)
 fmt.Printf("Message: %v\n", Message)
 fmt.Printf("err: %v\n", err)
+// 凡是短信发送成功后返回的Code都会处理成OK,否则失败代码需要查询相应平台的文档
 ```
 
 开启Grpc微服务

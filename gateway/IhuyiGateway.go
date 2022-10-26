@@ -42,6 +42,9 @@ func (g *IhuyiGateway) SendMessage(mobile *model.Phone, message *model.Message) 
 	data.SendSMSMessageResponse.Code = data.Code
 	data.SendSMSMessageResponse.RequestId = data.RequestId
 	data.SendSMSMessageResponse.Message = data.Message
+	if data.SendSMSMessageResponse.Code.Val == "2" {
+		data.SendSMSMessageResponse.Code.Val = "OK"
+	}
 	return data.SendSMSMessageResponse, nil
 }
 

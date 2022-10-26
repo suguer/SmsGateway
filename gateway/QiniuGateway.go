@@ -35,11 +35,16 @@ func (g *QiniuGateway) SendMessage(mobile *model.Phone, message *model.Message) 
 	var data QiniuSendSMSMessageResponse
 	request := http.NewHttpRequest()
 	request.SetMethod("POST")
-	request.SetPath("/v1/message/single")
 	args := map[string]any{
-		"mobile":      mobile.GetNumber(),
 		"template_id": message.GetTemplateCode(),
 		"parameters":  message.GetParam(),
+	}
+	if mobile.IsChineseCode() {
+		request.SetPath("/v1/message/single")
+		args["mobile"] = mobile.GetNumber()
+	} else {
+		request.SetPath("/v1/message/oversea")
+		args["mobiles"] = []string{mobile.GetNumber()}
 	}
 	jsonBytes, err := json.Marshal(args)
 	if err != nil {
@@ -57,6 +62,9 @@ func (g *QiniuGateway) SendMessage(mobile *model.Phone, message *model.Message) 
 	data.SendSMSMessageResponse.Code = data.Code
 	data.SendSMSMessageResponse.RequestId = data.RequestId
 	data.SendSMSMessageResponse.Message = data.Message
+	if data.SendSMSMessageResponse.Code.Val == "" {
+		data.SendSMSMessageResponse.Code.Val = "OK"
+	}
 	return data.SendSMSMessageResponse, nil
 }
 

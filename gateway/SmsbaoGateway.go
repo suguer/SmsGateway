@@ -32,6 +32,8 @@ func (g *SmsbaoGateway) SendMessage(mobile *model.Phone, message *model.Message)
 	}
 	data.Code.Val = string(response.GetBody())
 	switch data.Code.Val {
+	case "0":
+		data.Code.Val = "OK"
 	case "-1":
 		data.Message = "未知错误"
 	case "30":

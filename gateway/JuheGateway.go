@@ -11,7 +11,8 @@ type JuheGateway struct {
 
 type JuheSendSMSMessageResponse struct {
 	model.SendSMSMessageResponse
-	Message string `json:"msg"`
+	Message string     `json:"msg"`
+	Code    model.Code `json:"error_code"`
 }
 
 func (g *JuheGateway) GetName() string {
@@ -20,15 +21,15 @@ func (g *JuheGateway) GetName() string {
 
 func (g *JuheGateway) Init(c *model.Config) {
 	g.Gateway.Init(c)
-	g.ApiUrl = "http://v.juhe.cn/sms/send"
+	g.ApiUrl = "http://v.juhe.cn/"
 
 }
 
 func (g *JuheGateway) SendMessage(mobile *model.Phone, message *model.Message) (model.SendSMSMessageResponse, error) {
 	request := http.NewHttpRequest()
+	request.SetPath("sms/send")
 	request.SetQuery("mobile", mobile.GetNumber())
 	request.SetQuery("tpl_id", message.GetTemplateCode())
-	// request.SetQuery("vars", message.GetTemplateCode())
 	g.buildParam(request)
 	response, err := g.send(request)
 
@@ -41,6 +42,9 @@ func (g *JuheGateway) SendMessage(mobile *model.Phone, message *model.Message) (
 	data.SendSMSMessageResponse.Code = data.Code
 	data.SendSMSMessageResponse.RequestId = data.RequestId
 	data.SendSMSMessageResponse.Message = data.Message
+	if data.SendSMSMessageResponse.Code.Val == "0" {
+		data.SendSMSMessageResponse.Code.Val = "OK"
+	}
 	return data.SendSMSMessageResponse, nil
 }
 

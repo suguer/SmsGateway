@@ -36,10 +36,13 @@ func (g *BaiduGateway) SendMessage(mobile *model.Phone, message *model.Message) 
 	request.SetPath("/api/v3/sendSms")
 	request.SetMethod("POST")
 	args := map[string]any{
-		"mobile":      "15088132466",
+		"mobile":      mobile.GetNumber(),
 		"signatureId": message.GetSignName(),
 		"template":    message.GetTemplateCode(),
 		"contentVar":  message.GetParam(),
+	}
+	if !mobile.IsChineseCode() {
+		args["mobile"] = mobile.GetUniversalNumber()
 	}
 
 	var data BaiduSendSMSMessageResponse
@@ -58,6 +61,9 @@ func (g *BaiduGateway) SendMessage(mobile *model.Phone, message *model.Message) 
 	data.SendSMSMessageResponse.Code = data.Code
 	data.SendSMSMessageResponse.RequestId = data.RequestId
 	data.SendSMSMessageResponse.Message = data.Message
+	if data.SendSMSMessageResponse.Code.Val == "1000" {
+		data.SendSMSMessageResponse.Code.Val = "OK"
+	}
 	return data.SendSMSMessageResponse, err
 }
 

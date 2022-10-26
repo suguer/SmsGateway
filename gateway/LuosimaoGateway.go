@@ -46,6 +46,9 @@ func (g *LuosimaoGateway) SendMessage(mobile *model.Phone, message *model.Messag
 	}
 	data.SendSMSMessageResponse.Code = data.Code
 	data.SendSMSMessageResponse.Message = data.Message
+	if data.SendSMSMessageResponse.Code.Val == "0" {
+		data.SendSMSMessageResponse.Code.Val = "OK"
+	}
 	return data.SendSMSMessageResponse, nil
 }
 

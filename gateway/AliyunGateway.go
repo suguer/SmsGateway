@@ -2,7 +2,6 @@ package gateway
 
 import (
 	"encoding/json"
-	"errors"
 	"time"
 
 	"github.com/suguer/SmsGateway/model"
@@ -12,10 +11,6 @@ import (
 
 type AliyunGateway struct {
 	Gateway
-}
-
-type AliyunSendSMSMessageResponse struct {
-	model.SendSMSMessageResponse
 }
 
 func (g *AliyunGateway) Init(c *model.Config) {
@@ -31,19 +26,23 @@ func (g *AliyunGateway) GetName() string {
 func (g *AliyunGateway) SendMessage(mobile *model.Phone, message *model.Message) (model.SendSMSMessageResponse, error) {
 	request := http.NewHttpRequest()
 	request.SetQuery("Action", "SendSms")
-	request.SetQuery("PhoneNumbers", mobile.GetNumber())
+	if mobile.IsChineseCode() {
+		request.SetQuery("PhoneNumbers", mobile.GetNumber())
+	} else {
+		request.SetQuery("PhoneNumbers", mobile.GetUniversalNumber())
+	}
 	request.SetQuery("SignName", message.GetSignName())
 	request.SetQuery("TemplateCode", message.GetTemplateCode())
 	Param, err := json.Marshal(message.GetParam())
 	request.SetQuery("TemplateParam", string(Param))
 	g.buildParam(request)
 	response, err := g.send(request)
-	var data AliyunSendSMSMessageResponse
+	var data model.SendSMSMessageResponse
 	err = model.NewCommonResponse(&data, response.GetBody())
 	if err != nil {
-		return data.SendSMSMessageResponse, err
+		return data, err
 	}
-	return data.SendSMSMessageResponse, err
+	return data, err
 }
 func (g *AliyunGateway) CreateSmsTemplate(template *model.Template) (model.CreateSmsTemplateResponse, error) {
 	var data model.CreateSmsTemplateResponse
@@ -66,9 +65,6 @@ func (g *AliyunGateway) CreateSmsTemplate(template *model.Template) (model.Creat
 	if err != nil {
 		return data, err
 	}
-	if data.Code.Val != "OK" {
-		return data, errors.New(data.Message)
-	}
 	return data, nil
 }
 func (g *AliyunGateway) QuerySmsTemplate(TemplateCode string) (model.QuerySmsTemplateponse, error) {
@@ -84,9 +80,6 @@ func (g *AliyunGateway) QuerySmsTemplate(TemplateCode string) (model.QuerySmsTem
 	err = model.NewCommonResponse(&data, response.GetBody())
 	if err != nil {
 		return data, err
-	}
-	if data.Code.Val != "OK" {
-		return data, errors.New(data.Message)
 	}
 	return data, nil
 }

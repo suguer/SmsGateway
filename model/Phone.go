@@ -10,12 +10,20 @@ type Phone struct {
 	idccode int
 }
 
-func (phone Phone) GetNumber() string {
+func (phone *Phone) GetNumber() string {
 	return strconv.Itoa(phone.number)
 }
 
-func (phone Phone) GetIdCCode() int {
+func (phone *Phone) GetIdCCode() int {
 	return phone.idccode
+}
+
+func (phone *Phone) IsChineseCode() bool {
+	return phone.idccode == 86
+}
+
+func (phone *Phone) GetUniversalNumber() string {
+	return "+" + strconv.Itoa(phone.idccode) + strconv.Itoa(phone.number)
 }
 
 func NewPhone(content string) *Phone {
