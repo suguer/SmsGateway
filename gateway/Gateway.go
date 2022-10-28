@@ -15,8 +15,6 @@ type GatewayInterface interface {
 	// SendMessage 发送短信 ,Struct,错误码
 	SendMessage(mobile *model.Phone, message *model.Message) (model.SendSMSMessageResponse, error)
 
-	// SendBatchSms(mobile []*model.Phone, message *model.Message) (model.SendSMSMessageResponse, error)
-
 	CreateSmsTemplate(template *model.Template) (model.CreateSmsTemplateResponse, error)
 
 	QuerySmsTemplate(TemplateCode string) (model.QuerySmsTemplateponse, error)
@@ -79,6 +77,8 @@ func NewGatewayInterface(platform string, c *model.Config) (GatewayInterface, er
 		gateway = &SmsbaoGateway{}
 	case "luosimao":
 		gateway = &LuosimaoGateway{}
+	case "tinree":
+		gateway = &TinreeGateway{}
 	default:
 		return nil, errors.New("unspport")
 	}

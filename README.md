@@ -16,6 +16,7 @@
 * [SUBMAIL](https://www.mysubmail.com/)
 * [短信宝](https://www.smsbao.com/)
 * [螺丝帽](https://luosimao.com/)
+* [天瑞云](https://cms.tinree.com/)
 
 ## 示例使用代码
 直接使用
@@ -24,9 +25,11 @@
 	 	AppID:     "AppID",
 	 	AppSecret: "AppSecret",
 })
+	//phone := model.NewPhone("+852.6200XXXX")
+	phone := model.NewPhone("+86.150XXXXXXXX")
 Param := map[string]string{"0": "1234", "1": "1234", "2": "1234"}
 message := model.NewMessage("您正在申请手机注册，验证码为：1234，5分钟内有效！", "", "", Param)
-Message, err := api.SendMessage(model.NewPhone("150xxxxxxxx"), message)
+Message, err := api.SendMessage(phone, message)
 fmt.Printf("Message: %v\n", Message)
 fmt.Printf("err: %v\n", err)
 // 凡是短信发送成功后返回的Code都会处理成OK,否则失败代码需要查询相应平台的文档
@@ -73,5 +76,6 @@ s.Start(50051)
 | [SUBMAIL](https://www.mysubmail.com/)          | 内容/模板     |     企业       |        |          |          |
 | [短信宝](https://www.smsbao.com/)        | 内容     |     个人       |   ✅      |     无     |    无      |
 | [螺丝帽](https://luosimao.com/)        | 内容     |     个人       |   ✅      |     无     |    无      |
+| [天瑞云](https://cms.tinree.com/)        |   模板   |            |   ✅     |     ✅     |    ✅      |
 
 ### 功能逐步完善中,如果有需要接入的其他短信平台可留言备注
